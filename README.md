@@ -6,9 +6,9 @@
 
 <p align="center">
   <b>Download:</b>
+<<<<<<< HEAD
   <a href="https://github.com/majick/DeArrow-GPL/releases">Chromium</a> |
   <a href="https://github.com/majick/DeArrow-GPL/releases">Firefox</a> |
-  <a href="https://apps.apple.com/app/dearrow-for-youtube/id6451469297">Safari for MacOS and iOS</a> |
   <a href=""><s>Android</s> is cancer</a> |
   <a href=""><s>Buy</s> LOL</a> |
   <a href="https://dearrow.ajay.app">Website</a> |
