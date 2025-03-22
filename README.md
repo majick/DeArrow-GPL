@@ -59,7 +59,7 @@ Blah blah blah, dude had some weird enterprise license injection crap here. Elid
 
 ### Building
 
-You must have [Node.js 22](https://nodejs.org/) and npm installed.
+You must have [Node.js 16](https://nodejs.org/) and npm installed.  Actually don't use node 16 which is like ten zillion years old.
 
 1. Clone with submodules
 
