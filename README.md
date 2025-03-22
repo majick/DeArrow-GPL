@@ -8,7 +8,7 @@
   <b>Download:</b>
   <a href="https://github.com/majick/DeArrow-GPL/releases">Chromium</a> |
   <a href="https://github.com/majick/DeArrow-GPL/releases">Firefox</a> |
-  <a href="https://apps.apple.com/app/dearrow-for-youtube/id6451469297">Safari for MacOS and iOS</a> |
+
   <a href=""><s>Android</s> is cancer</a> |
   <a href=""><s>Buy</s> LOL</a> |
   <a href="https://dearrow.ajay.app">Website</a> |
@@ -59,7 +59,7 @@ Blah blah blah, dude had some weird enterprise license injection crap here. Elid
 
 ### Building
 
-You must have [Node.js 22](https://nodejs.org/) and npm installed.
+You must have [Node.js 16](https://nodejs.org/) and npm installed.  Actually don't use node 16 which is like ten zillion years old.
 
 1. Clone with submodules
 
