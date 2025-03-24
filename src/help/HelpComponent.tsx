@@ -9,7 +9,7 @@ export const HelpComponent = () => {
             <div id="title">
                 <img src="icons/logo-256.png" height="80" className="profilepic" />
                 <span id="titleText">
-                    DeArrow
+                    DeArrow-GPL
                 </span>
             </div>
 
@@ -43,7 +43,7 @@ export const HelpComponent = () => {
                     {chrome.i18n.getMessage("termsAgreement").split("{privacy-policy}")[0]}
                     <a href="https://gist.github.com/ajayyy/9bfec83d57ea34f5182658ec8445aa9d" target="_blank" rel="noreferrer">{chrome.i18n.getMessage("privacyPolicy")}</a>
                     {chrome.i18n.getMessage("termsAgreement").split("{privacy-policy}")[1].split("{terms}")[0]} 
-                    <a href="https://gist.github.com/ajayyy/9e8100f069348e0bc062641f34d6af12" target="_blank" rel="noreferrer">{chrome.i18n.getMessage("termsOfUse")}</a>.{" "}
+                    <a href="https://github.com/majick/DeArrow-GPL/blob/master/LICENSE" target="_blank" rel="noreferrer">{chrome.i18n.getMessage("termsOfUse")}</a>.{" "} -- GPL.
                 </p>
 
                 {
