@@ -21,7 +21,7 @@ export const PopupComponent = () => {
                 <img src="icons/logo.svg" alt="DeArrow Logo" width="40" height="40" id="dearrowPopupLogo"/>
                 <p className="u-mZ">
                     <FormattedText
-                        text="DeArrow"
+                        text="DeArrow-GPL"
                         titleFormatting={titleFormatting}
                     />
                 </p>
@@ -156,14 +156,14 @@ export const PopupComponent = () => {
                         titleFormatting={titleFormatting}
                     />
                 </a>
-                <a href="https://dearrow.ajay.app/donate" target="_blank" rel="noreferrer" className={!showDonationLink() ? " hidden" : ""}>
+                <a href="https://gist.github.com/majick/0c12c2370652d2fe78b07ff379a7bfa1" target="_blank" rel="noreferrer" className={!showDonationLink() ? " hidden" : ""}>
                     <FormattedText
                         langKey="Donate"
                         titleFormatting={titleFormatting}
                     />
                 </a>
                 <br />
-                <a href="https://github.com/ajayyy/DeArrow" target="_blank" rel="noreferrer">
+                <a href="https://github.com/majick/DeArrow-GPL" target="_blank" rel="noreferrer">
                     <FormattedText
                         text="GitHub"
                         titleFormatting={titleFormatting}
@@ -172,12 +172,6 @@ export const PopupComponent = () => {
                 <a href="https://discord.gg/SponsorBlock" target="_blank" rel="noreferrer">
                     <FormattedText
                         text="Discord"
-                        titleFormatting={titleFormatting}
-                    />
-                </a>
-                <a href="https://matrix.to/#/#sponsor:ajay.app?via=ajay.app&via=matrix.org&via=mozilla.org" target="_blank" rel="noreferrer">
-                    <FormattedText
-                        text="Matrix"
                         titleFormatting={titleFormatting}
                     />
                 </a>
