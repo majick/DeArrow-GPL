@@ -28,7 +28,7 @@ export async function getOrCreateTitleButtonContainer(forceTitleNode?: HTMLEleme
         return titleButtonContainer;
     }
 
-    const titleNode = forceTitleNode ?? await waitForElement(getYouTubeTitleNodeSelector(), true) as HTMLElement;
+    const titleNode = forceTitleNode ?? await waitForElement(getYouTubeTitleNodeSelector(), true, true, true) as HTMLElement;
 
     // Experimental YouTube layout with description on right
     const isOnDescriptionOnRightLayout = titleNode?.parentElement?.querySelector("#description");
@@ -43,6 +43,12 @@ export async function getOrCreateTitleButtonContainer(forceTitleNode?: HTMLEleme
         if (!titleButtonContainer || titleButtonContainer.parentElement !== referenceNode) {
             titleButtonContainer ??= referenceNode.querySelector(".cbTitleButtonContainer") as HTMLElement;
             if (!titleButtonContainer) {
+                // Make sure there are no extra button containers
+                const existingContainers = document.querySelectorAll(".cbTitleButtonContainer");
+                for (const container of existingContainers) {
+                    container.remove();
+                }
+
                 titleButtonContainer = document.createElement("div");
                 titleButtonContainer.classList.add("cbTitleButtonContainer");
             }
@@ -181,7 +187,7 @@ function setupRemovalListener(referenceNode: HTMLElement) {
 
 let badgeListener: MutationObserver | null = null;
 export async function listenForBadges() {
-    const titleNode = await waitForElement(getYouTubeTitleNodeSelector(), true) as HTMLElement;
+    const titleNode = await waitForElement(getYouTubeTitleNodeSelector(), true, true, true) as HTMLElement;
     const referenceNode = titleNode?.parentElement;
 
     if (referenceNode) {
@@ -218,7 +224,7 @@ function moveBadge(badge: HTMLElement) {
 let titleChangeObserver: MutationObserver | null = null;
 const titleChangeListeners: (() => void)[] = [];
 export async function listenForTitleChange() {
-    const titleNode = await waitForElement(getYouTubeTitleNodeSelector(), true) as HTMLElement;
+    const titleNode = await waitForElement(getYouTubeTitleNodeSelector(), true, true, true) as HTMLElement;
     titleChangeObserver = setupTextChangeListener(titleChangeObserver, titleNode, true);
 }
 

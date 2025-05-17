@@ -80,7 +80,8 @@ export async function replaceTitle(element: HTMLElement, videoID: VideoID, showC
                 && (await getTitleFormatting(videoID) !== TitleFormatting.Disable || originalTitle.toLowerCase() !== title.toLowerCase())
                 && (await getTitleFormatting(videoID) !== TitleFormatting.Disable 
                     || await shouldCleanEmojis(videoID) || cleanEmojis(originalTitle.toLowerCase()) !== cleanEmojis(title.toLowerCase()))
-                && !(await shouldShowCasual(videoID, showCustomBranding, brandingLocation))) {
+                && (!await shouldShowCasual(videoID, showCustomBranding, brandingLocation) 
+                    || (originalTitle.toLowerCase() === title.toLowerCase() && await getTitleFormatting(videoID) !== TitleFormatting.Disable))) {
             const formattedTitle = await formatTitle(title, true, videoID);
             if (!await isOnCorrectVideo(element, brandingLocation, videoID)) return false;
 
@@ -533,7 +534,7 @@ export async function findOrCreateShowOriginalButton(element: HTMLElement, brand
         videoID: VideoID): Promise<HTMLElement> {
     const originalTitleElement = getOriginalTitleElement(element, brandingLocation);
     const buttonElement = await findShowOriginalButton(originalTitleElement, brandingLocation) 
-        ?? await createShowOriginalButton(originalTitleElement, brandingLocation, videoID);
+        ?? await createShowOriginalButton(element, originalTitleElement, brandingLocation, videoID);
 
     buttonElement.setAttribute("videoID", videoID);
     buttonElement.style.removeProperty("display");
@@ -544,7 +545,7 @@ export async function findOrCreateShowOriginalButton(element: HTMLElement, brand
     return buttonElement;
 }
 
-async function createShowOriginalButton(originalTitleElement: HTMLElement,
+async function createShowOriginalButton(element: HTMLElement, originalTitleElement: HTMLElement,
         brandingLocation: BrandingLocation, videoID: VideoID): Promise<HTMLElement> {
     const buttonElement = document.createElement("button");
     // Style set here for when css disappears during updates
@@ -586,6 +587,19 @@ async function createShowOriginalButton(originalTitleElement: HTMLElement,
         document.querySelector("ytd-video-preview") as HTMLElement
     ];
 
+    const hideHoverPlayers = () => {
+        // Hide hover play, made visible again when mouse leaves area
+        for (const player of getHoverPlayers()) {
+            if (player) {
+                player.style.display = "none";
+                const hoverPlayerVideo = player.querySelector("video");
+                if (hoverPlayerVideo) {
+                    hoverPlayerVideo.pause();
+                }
+            }
+        }
+    };
+
     const toggleDetails = async (value?: boolean) => {
         const videoID = buttonElement.getAttribute("videoID");
         if (videoID) {
@@ -595,16 +609,7 @@ async function createShowOriginalButton(originalTitleElement: HTMLElement,
                 await setShowCustomBasedOnDefault(videoID as VideoID, originalTitleElement, brandingLocation, value);
             }
 
-            // Hide hover play, made visible again when mouse leaves area
-            for (const player of getHoverPlayers()) {
-                if (player) {
-                    player.style.display = "none";
-                    const hoverPlayerVideo = player.querySelector("video");
-                    if (hoverPlayerVideo) {
-                        hoverPlayerVideo.pause();
-                    }
-                }
-            }
+            hideHoverPlayers();
         }
     }
 
@@ -619,16 +624,39 @@ async function createShowOriginalButton(originalTitleElement: HTMLElement,
     })(e));
 
     buttonElement.addEventListener("mouseenter", () => void (async () => {
-        if (Config.config!.showOriginalOnHover) {
+        if (Config.config!.showOriginalOnHover && !Config.config!.showOriginalOnHoverOfVideo) {
             await toggleDetails(false);
         }
     })());
-
     buttonElement.addEventListener("mouseleave", () => void (async () => {
-        if (Config.config!.showOriginalOnHover) {
+        if (Config.config!.showOriginalOnHover && !Config.config!.showOriginalOnHoverOfVideo) {
             await toggleDetails(true);
         }
     })());
+
+    element.addEventListener("mouseenter", () => void (async () => {
+        if (!chrome.runtime?.id) return; // Extension context invalidated
+
+        if (Config.config!.showOriginalOnHover && Config.config!.showOriginalOnHoverOfVideo) {
+            await toggleDetails(false);
+        }
+    })());
+    element.addEventListener("mouseleave", () => void (async () => {
+        if (!chrome.runtime?.id) return; // Extension context invalidated
+
+        if (Config.config!.showOriginalOnHover && Config.config!.showOriginalOnHoverOfVideo) {
+            await toggleDetails(true);
+        }
+    })());
+    if (Config.config!.showOriginalOnHover && Config.config!.showOriginalOnHoverOfVideo) {
+        element.addEventListener("mousemove", () => {
+            if (!chrome.runtime?.id) return; // Extension context invalidated
+
+            if (Config.config!.showOriginalOnHover && Config.config!.showOriginalOnHoverOfVideo) {
+                hideHoverPlayers();
+            }
+        });
+    }
 
     if (originalTitleElement.parentElement) {
         originalTitleElement.parentElement.addEventListener("mouseleave", () => {
