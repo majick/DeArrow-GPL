@@ -27,7 +27,10 @@ import { FormattedText } from "../popup/FormattedTextComponent";
 import { isAutoWarningShown } from "./autoWarning";
 import { getAntiTranslatedTitle } from "../titles/titleAntiTranslateData";
 import { isLiveSync } from "../../maze-utils/src/metadataFetcher";
+<<<<<<< HEAD
 import { getCurrentPageTitle } from "../../maze-utils/src/elements";
+=======
+>>>>>>> aade278 (Resync (#3))
 
 export interface SubmissionComponentProps {
     videoID: VideoID;

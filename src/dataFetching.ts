@@ -18,7 +18,10 @@ import { sendRequestToServer } from "./utils/requests";
 import { thumbnailDataCache } from "./thumbnails/thumbnailDataCache";
 import { getAutoWarning } from "./submission/autoWarning";
 import { fetchVideoMetadata, isLiveSync } from "../maze-utils/src/metadataFetcher";
+<<<<<<< HEAD
 import { getCurrentPageTitle } from "../maze-utils/src/elements";
+=======
+>>>>>>> aade278 (Resync (#3))
 
 interface VideoBrandingCacheRecord extends BrandingResult {
     lastUsed: number;
